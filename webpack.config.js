@@ -16,6 +16,9 @@ const config = {
             test: /\.vue$/,
             loader: 'vue-loader'
         }, {
+            test: /\.jsx$/,
+            loader: 'babel-loader'
+        }, {
             test: /\.css$/,
             use: [
                 'style-loader',
@@ -37,6 +40,12 @@ const config = {
             use: [
                 'style-loader',
                 'css-loader',
+                {
+                    loader: "postcss-loader",
+                    options: {
+                        sourceMap: true
+                    }
+                },
                 'stylus-loader'
             ]
         }]
@@ -54,19 +63,19 @@ const config = {
 
 if (isDev) {
     config.devtool = '#cheap-module-eval-source-map',
-    config.devServer = {
-        port: 8000,
-        host: '0.0.0.0',
-        overlay: {
-            error: true
+        config.devServer = {
+            port: 8000,
+            host: '0.0.0.0',
+            overlay: {
+                error: true
+            },
+            open: true,
+            hot: true,
         },
-        open: true,
-        hot: true,
-    },
-    config.plugins.push(
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoEmitOnErrorsPlugin(),
-    )
+        config.plugins.push(
+            new webpack.HotModuleReplacementPlugin(),
+            new webpack.NoEmitOnErrorsPlugin(),
+        )
 }
 
 module.exports = config;
